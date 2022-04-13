@@ -45,7 +45,7 @@ void *board_fdt_blob_setup(void)
 	return (void *)rom_pointer[0];
 }
 
-#define MAX_MEM_MAP_REGIONS 5
+#define MAX_MEM_MAP_REGIONS 4
 static struct mm_region xen_mem_map[MAX_MEM_MAP_REGIONS];
 struct mm_region *mem_map = xen_mem_map;
 
@@ -68,6 +68,7 @@ static int setup_mem_map(void)
 	phys_addr_t gnttab_base;
 	phys_size_t gnttab_sz;
 
+	memset(xen_mem_map, 0, sizeof(xen_mem_map));
 	/*
 	 * Add "magic" region which is used by Xen to provide some essentials
 	 * for the guest: we need console and xenstore.
@@ -101,14 +102,14 @@ static int setup_mem_map(void)
 	i++;
 
 	/* Get Xen's suggested physical page assignments for the grant table. */
-	get_gnttab_base(&gnttab_base, &gnttab_sz);
+/*	get_gnttab_base(&gnttab_base, &gnttab_sz);
 
 	xen_mem_map[i].virt = gnttab_base;
 	xen_mem_map[i].phys = gnttab_base;
 	xen_mem_map[i].size = gnttab_sz;
 	xen_mem_map[i].attrs = (PTE_BLOCK_MEMTYPE(MT_NORMAL) |
 				PTE_BLOCK_INNER_SHARE);
-	i++;
+	i++;*/
 
 	mem = get_next_memory_node(blob, -1);
 	if (mem < 0) {

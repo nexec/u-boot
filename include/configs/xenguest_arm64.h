@@ -21,6 +21,7 @@
  * please note, that CONFIG_SYS_TEXT_BASE must match the below.
  */
 #define CONFIG_SYS_LOAD_ADDR                    0x40000000
+#define CONFIG_SYS_INIT_SP_ADDR                 0x43FFE000
 #define CONFIG_LNX_KRNL_IMG_TEXT_OFFSET_BASE    CONFIG_SYS_LOAD_ADDR
 
 /* Size of malloc() pool */
