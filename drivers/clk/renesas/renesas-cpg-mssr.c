@@ -17,6 +17,7 @@
 #include <wait_bit.h>
 #include <asm/io.h>
 #include <linux/bitops.h>
+#include <asm/arch/rmobile.h>
 
 #include <dt-bindings/clock/renesas-cpg-mssr.h>
 
