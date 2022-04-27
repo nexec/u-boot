@@ -798,7 +798,8 @@ dtb-$(CONFIG_RCAR_GEN3) += \
 	r8a77980-condor-u-boot.dtb \
 	r8a77990-ebisu-u-boot.dtb \
 	r8a77995-draak-u-boot.dtb \
-	r8a779a0-falcon-u-boot.dtb
+	r8a779a0-falcon-u-boot.dtb \
+	r8a77951-salvator-x-xen-u-boot.dtb
 
 ifdef CONFIG_RCAR_GEN3
 DTC_FLAGS += -R 4 -p 0x1000

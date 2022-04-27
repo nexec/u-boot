@@ -1,0 +1,15 @@
+if TARGET_SALVATOR_X_XEN
+
+config SYS_SOC
+	default "rmobile"
+
+config SYS_BOARD
+	default "salvator-x-xen"
+
+config SYS_VENDOR
+	default "renesas"
+
+config SYS_CONFIG_NAME
+	default "salvator-x-xen"
+
+endif

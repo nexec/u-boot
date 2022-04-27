@@ -1,0 +1,107 @@
+/dts-v1/;
+
+#include <dt-bindings/clock/r8a7795-cpg-mssr.h>
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+
+/ {
+	model = "XENVM-4.16";
+	compatible = "xen,xenvm-4.16\0xen,xenvm";
+	interrupt-parent = <0xfde8>;
+	#address-cells = <0x02>;
+	#size-cells = <0x02>;
+
+	cpus {
+		#address-cells = <0x01>;
+		#size-cells = <0x00>;
+
+		cpu@0 {
+			device_type = "cpu";
+			compatible = "arm,armv8";
+			enable-method = "psci";
+			reg = <0x00>;
+		};
+	};
+
+	psci {
+		compatible = "arm,psci-1.0\0arm,psci-0.2\0arm,psci";
+		method = "hvc";
+		cpu_off = <0x01>;
+		cpu_on = <0x02>;
+	};
+
+	memory@40000000 {
+		device_type = "memory";
+		reg = <0x00 0x40000000 0x00 0x4000000>;
+	};
+
+	extal_clk: extal {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <16666666>;
+	};
+
+	extalr_clk: extalr {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <32768>;
+	};
+	
+	gic: interrupt-controller@3001000 {
+		compatible = "arm,cortex-a15-gic\0arm,cortex-a9-gic";
+		#interrupt-cells = <0x03>;
+		#address-cells = <0x00>;
+		interrupt-controller;
+		reg = <0x00 0x3001000 0x00 0x1000 0x00 0x3002000 0x00 0x2000>;
+		linux,phandle = <0xfde8>;
+		phandle = <0xfde8>;
+	};
+	
+	cpg: clock-controller@e6150000 {
+		compatible = "renesas,r8a7795-cpg-mssr";
+		reg = <0 0xe6150000 0 0x1000>;
+		clocks = <&extal_clk>, <&extalr_clk>;
+		clock-names = "extal", "extalr";
+		#clock-cells = <2>;
+		#power-domain-cells = <0>;
+		#reset-cells = <1>;
+	};
+
+	rst: reset-controller@e6160000 {
+		compatible = "renesas,r8a7795-rst";
+		reg = <0 0xe6160000 0 0x0200>;
+	};
+
+	scif_clk: scif {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <14745600>;
+	};
+
+	scif1: serial@e6e68000 {
+		compatible = "renesas,scif-r8a7795",
+			     "renesas,rcar-gen3-scif", "renesas,scif";
+		interrupt-parent = <&gic>;
+		reg = <0 0xe6e68000 0 64>;
+		interrupts = <GIC_SPI 153 IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&cpg CPG_MOD 206>,
+			 <&cpg CPG_CORE R8A7795_CLK_S3D1>,
+			 <&scif_clk>;
+		clock-names = "fck", "brg_int", "scif_clk";
+		/*power-domains = <&sysc R8A7795_PD_ALWAYS_ON>;*/
+		resets = <&cpg 206>;
+		status = "okay";
+	};
+	
+	timer {
+		compatible = "arm,armv8-timer";
+		interrupts = <0x01 0x0d 0xf08 0x01 0x0e 0xf08 0x01 0x0b 0xf08>;
+		interrupt-parent = <0xfde8>;
+	};
+
+	hypervisor {
+		compatible = "xen,xen-4.16\0xen,xen";
+		reg = <0x00 0x38000000 0x00 0x1000000 0x00 0x44000000 0x00 0xbc000000 0x02 0x00 0xfe 0x00>;
+		interrupts = <0x01 0x0f 0xf08>;
+		interrupt-parent = <0xfde8>;
+	};
+};

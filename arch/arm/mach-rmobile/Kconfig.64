@@ -99,6 +99,16 @@ config TARGET_SALVATOR_X
 	help
           Support for Renesas R-Car Gen3 platform
 
+config TARGET_SALVATOR_X_XEN
+	bool "Salvator-X board on Xen DomD"
+	select LINUX_KERNEL_IMAGE_HEADER
+	imply R8A7795
+	imply SYS_MALLOC_F
+	imply MULTI_DTB_FIT
+	imply MULTI_DTB_FIT_USER_DEFINED_AREA
+	help
+          Support for Renesas R-Car Gen3 platform on Xen DomD
+
 config TARGET_ULCB
 	bool "ULCB board"
 	imply R8A7795
@@ -121,6 +131,7 @@ source "board/renesas/eagle/Kconfig"
 source "board/renesas/ebisu/Kconfig"
 source "board/renesas/falcon/Kconfig"
 source "board/renesas/salvator-x/Kconfig"
+source "board/renesas/salvator-x-xen/Kconfig"
 source "board/renesas/ulcb/Kconfig"
 source "board/beacon/beacon-rzg2m/Kconfig"
 
