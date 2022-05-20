@@ -24,6 +24,8 @@
 #include <asm/io.h>
 #include <asm/gpio.h>
 
+#include <mach/rmobile.h>
+
 /* Registers */
 #define RAVB_REG_CCC		0x000
 #define RAVB_REG_DBAT		0x004

@@ -16,7 +16,14 @@
 #include <xen/gnttab.h>
 #include <xen/hvm.h>
 
+#include <mach/rmobile.h>
+
 DECLARE_GLOBAL_DATA_PTR;
+
+/* TODO: fix this HACK */
+u32 rmobile_get_cpu_type(void) {
+	return RMOBILE_CPU_TYPE_R8A7795;
+}
 
 int board_init(void)
 {
@@ -104,6 +111,7 @@ static int setup_mem_map(void)
 				PTE_BLOCK_INNER_SHARE);
 	i++;
 
+	/* TODO: fix gnttab region in Zephyr Dom0 */
 	/* Get Xen's suggested physical page assignments for the grant table. */
 /*	get_gnttab_base(&gnttab_base, &gnttab_sz);
 
@@ -114,21 +122,9 @@ static int setup_mem_map(void)
 				PTE_BLOCK_INNER_SHARE);
 	i++;*/
 
-	xen_mem_map[i].virt = 0xE6E68000;
-	xen_mem_map[i].phys = 0xE6E68000;
-	xen_mem_map[i].size = PAGE_SIZE;
-	xen_mem_map[i].attrs = PTE_BLOCK_MEMTYPE(MT_DEVICE_NGNRNE) | PTE_BLOCK_NON_SHARE | PTE_BLOCK_PXN | PTE_BLOCK_UXN;
-	i++;
-
-	xen_mem_map[i].virt = 0xe6150000;
-	xen_mem_map[i].phys = 0xe6150000;
-	xen_mem_map[i].size = PAGE_SIZE;
-	xen_mem_map[i].attrs = PTE_BLOCK_MEMTYPE(MT_DEVICE_NGNRNE) | PTE_BLOCK_NON_SHARE | PTE_BLOCK_PXN | PTE_BLOCK_UXN;
-	i++;
-
-	xen_mem_map[i].virt = 0xe6160000;
-	xen_mem_map[i].phys = 0xe6160000;
-	xen_mem_map[i].size = PAGE_SIZE;
+	xen_mem_map[i].virt = 0xe6000000;
+	xen_mem_map[i].phys = 0xe6000000;
+	xen_mem_map[i].size = 0x1000000;
 	xen_mem_map[i].attrs = PTE_BLOCK_MEMTYPE(MT_DEVICE_NGNRNE) | PTE_BLOCK_NON_SHARE | PTE_BLOCK_PXN | PTE_BLOCK_UXN;
 	i++;
 

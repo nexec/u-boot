@@ -16,8 +16,8 @@
  * This can be any arbitrary address as we are using PIE, but
  * please note, that CONFIG_SYS_TEXT_BASE must match the below.
  */
-#define CONFIG_SYS_LOAD_ADDR                    0x40000000
-#define CONFIG_SYS_INIT_SP_ADDR                 0x43FFC000
+#define CONFIG_SYS_LOAD_ADDR                    0x40080000
+#define CONFIG_SYS_INIT_SP_ADDR                 0x42FFC000
 #define CONFIG_LNX_KRNL_IMG_TEXT_OFFSET_BASE    CONFIG_SYS_LOAD_ADDR
 
 /* Size of malloc() pool */
@@ -35,8 +35,10 @@
 
 #undef CONFIG_EXTRA_ENV_SETTINGS
 #define CONFIG_EXTRA_ENV_SETTINGS	\
-	"loadimage=ext4load pvblock 0 0x90000000 /boot/Image;\0" \
-	"pvblockboot=run loadimage;" \
-		"booti 0x90000000 - 0x88000000;\0"
+	"ethaddr=2E:09:0A:00:A0:4B\0 ipaddr=192.168.1.20\0 serverip=192.168.1.10\0"
+
+/* Ethernet RAVB */
+#define CONFIG_BITBANGMII_MULTI
+
 
 #endif /* __SALVATOR_X_XEN_H */
