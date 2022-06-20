@@ -73,11 +73,10 @@ static int setup_mem_map(void)
 	struct fdt_resource res;
 	const void *blob = gd->fdt_blob;
 	u64 gfn;
-/*
- * TODO: return this when add pages for gnttab
- *	phys_addr_t gnttab_base;
- *	phys_size_t gnttab_sz;
- */
+
+	phys_addr_t gnttab_base;
+	phys_size_t gnttab_sz;
+
 	memset(xen_mem_map, 0, sizeof(xen_mem_map));
 	/*
 	 * Add "magic" region which is used by Xen to provide some essentials
@@ -113,14 +112,14 @@ static int setup_mem_map(void)
 
 	/* TODO: fix gnttab region in Zephyr Dom0 */
 	/* Get Xen's suggested physical page assignments for the grant table. */
-/*	get_gnttab_base(&gnttab_base, &gnttab_sz);
+	get_gnttab_base(&gnttab_base, &gnttab_sz);
 
 	xen_mem_map[i].virt = gnttab_base;
 	xen_mem_map[i].phys = gnttab_base;
 	xen_mem_map[i].size = gnttab_sz;
 	xen_mem_map[i].attrs = (PTE_BLOCK_MEMTYPE(MT_NORMAL) |
 				PTE_BLOCK_INNER_SHARE);
-	i++;*/
+	i++;
 
 	xen_mem_map[i].virt = 0xe6000000;
 	xen_mem_map[i].phys = 0xe6000000;

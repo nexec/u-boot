@@ -238,8 +238,8 @@ void xen_init(void)
 
 	map_shared_info(NULL);
 	init_events();
-//	init_xenbus();
-//	init_gnttab();
+	init_xenbus();
+	init_gnttab();
 }
 
 void xen_fini(void)
@@ -247,6 +247,6 @@ void xen_fini(void)
 	debug("%s\n", __func__);
 
 //	fini_gnttab();
-//	fini_xenbus();
+	fini_xenbus();
 	fini_events();
 }
