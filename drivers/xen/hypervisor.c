@@ -276,7 +276,7 @@ void xen_fini(void)
 {
 	debug("%s\n", __func__);
 
-//	fini_gnttab();
+	fini_gnttab();
 	fini_xenbus();
 	fini_events();
 	unmap_shared_info();
