@@ -37,8 +37,8 @@
 #define CONFIG_EXTRA_ENV_SETTINGS	\
 	"ethaddr=2E:09:0A:00:A0:4B\0 ipaddr=192.168.1.20\0 serverip=192.168.1.10\0" \
 	"fdt_high=0xffffffffffffffff\0" \
-	"bootargs=ignore_loglevel rw ip=192.168.1.20 rootfstype=nfs root=/dev/nfs " \
-	"nfsroot=192.168.1.10:/home/dfirsov/board_dir/domd,nfsvers=3,vers=3,tcp console=ttySC0,115200\0" \
+	"bootargs=ignore_loglevel rw ip=198.18.205.124 rootfstype=nfs root=/dev/nfs " \
+	"nfsroot=198.18.205.111:/home/cybsol/prjcts/arm_xen/tftp/setup_transfer/domd,nfsvers=3,vers=3,tcp console=ttySC0,115200\0" \
 	"bootcmd=tftp 0x42080000 domd_dumped.dtb; tftp 0x43000000 domd_image; booti 0x43000000 - 0x42080000\0"
 
 /* Ethernet RAVB */
